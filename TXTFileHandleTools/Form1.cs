@@ -82,10 +82,12 @@ namespace TXTFileHandleTools
                         string[] readText = File.ReadAllLines(item, Encoding.UTF8);
                         all.AddRange(readText.ToList<string>());
                     }
-                    all = all.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList();
+                    //Distinct会删除重复项
+                    //all = all.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList();
+                    all = all.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
 
                     File.WriteAllLines(mergeTargetFile, all, Encoding.UTF8);
-
+                    all.Clear();
                 }).ContinueWith(t => {
 
                     this.Invoke((MethodInvoker)delegate {
@@ -118,18 +120,23 @@ namespace TXTFileHandleTools
                 DupTargetFileButton.Enabled = false;
                 DupSourceFileTextBox.Enabled = false;
                 DupTargetFileTextBox.Enabled = false;
+                DupButton.Enabled = false;
 
                 Task.Factory.StartNew(() => {
 
                     string[] all = File.ReadAllLines(dupSourceFile, Encoding.UTF8);
 
                     //移除空字符
-                    all = all.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToArray();
+                    all = all.Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
 
                     // 移除重复
                     HashSet<string> hs = new HashSet<string>(all.ToList<string>());
 
                     File.WriteAllLines(dupTargetFile, hs, Encoding.UTF8);
+
+                    Array.Clear(all, 0, all.Length);
+                    hs.Clear();
+                    
 
                 }).ContinueWith(t => {
 
@@ -138,6 +145,7 @@ namespace TXTFileHandleTools
                         DupTargetFileButton.Enabled = true;
                         DupSourceFileTextBox.Enabled = true;
                         DupTargetFileTextBox.Enabled = true;
+                        DupButton.Enabled = true;
                     });
 
                 });
@@ -241,7 +249,8 @@ namespace TXTFileHandleTools
                 {
 
                     string[] all = File.ReadAllLines(domainSourceFile, Encoding.UTF8);
-                    all = all.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToArray();
+
+                    all = all.Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
 
                     Parallel.For(0, all.Length, (i) =>
                     {
@@ -252,6 +261,7 @@ namespace TXTFileHandleTools
 
                     all = all.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToArray();
                     File.WriteAllLines(domainTargetFile, all, Encoding.UTF8);
+                    Array.Clear(all, 0, all.Length);
 
                 }).ContinueWith(t =>
                 {
