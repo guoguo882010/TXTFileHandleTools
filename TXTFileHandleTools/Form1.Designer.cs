@@ -54,9 +54,18 @@
             this.DomainButton = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.DomainTargetTextBox = new System.Windows.Forms.TextBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.SplitSourceTextBox = new System.Windows.Forms.TextBox();
+            this.SplitSourceButton = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.SplitButton = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.SplitLineTextBox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -213,7 +222,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 343);
+            this.label3.Location = new System.Drawing.Point(12, 433);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(185, 12);
             this.label3.TabIndex = 2;
@@ -221,7 +230,7 @@
             // 
             // ExitAppButton
             // 
-            this.ExitAppButton.Location = new System.Drawing.Point(497, 338);
+            this.ExitAppButton.Location = new System.Drawing.Point(497, 428);
             this.ExitAppButton.Name = "ExitAppButton";
             this.ExitAppButton.Size = new System.Drawing.Size(75, 23);
             this.ExitAppButton.TabIndex = 3;
@@ -309,11 +318,90 @@
             this.DomainTargetTextBox.TabIndex = 14;
             this.DomainTargetTextBox.TextChanged += new System.EventHandler(this.DomainTargetTextBox_TextChanged);
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.SplitLineTextBox);
+            this.groupBox4.Controls.Add(this.label9);
+            this.groupBox4.Controls.Add(this.SplitSourceTextBox);
+            this.groupBox4.Controls.Add(this.SplitSourceButton);
+            this.groupBox4.Controls.Add(this.label2);
+            this.groupBox4.Controls.Add(this.SplitButton);
+            this.groupBox4.Controls.Add(this.label8);
+            this.groupBox4.Location = new System.Drawing.Point(14, 320);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(560, 100);
+            this.groupBox4.TabIndex = 5;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "　分割文本　";
+            // 
+            // SplitSourceTextBox
+            // 
+            this.SplitSourceTextBox.Location = new System.Drawing.Point(111, 18);
+            this.SplitSourceTextBox.Name = "SplitSourceTextBox";
+            this.SplitSourceTextBox.Size = new System.Drawing.Size(398, 21);
+            this.SplitSourceTextBox.TabIndex = 13;
+            // 
+            // SplitSourceButton
+            // 
+            this.SplitSourceButton.Location = new System.Drawing.Point(515, 18);
+            this.SplitSourceButton.Name = "SplitSourceButton";
+            this.SplitSourceButton.Size = new System.Drawing.Size(30, 23);
+            this.SplitSourceButton.TabIndex = 12;
+            this.SplitSourceButton.Text = ">>";
+            this.SplitSourceButton.UseVisualStyleBackColor = true;
+            this.SplitSourceButton.Click += new System.EventHandler(this.SplitSourceButton_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(30, 21);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(77, 12);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "选择源文件：";
+            // 
+            // SplitButton
+            // 
+            this.SplitButton.Location = new System.Drawing.Point(470, 72);
+            this.SplitButton.Name = "SplitButton";
+            this.SplitButton.Size = new System.Drawing.Size(75, 23);
+            this.SplitButton.TabIndex = 15;
+            this.SplitButton.Text = "分割文本";
+            this.SplitButton.UseVisualStyleBackColor = true;
+            this.SplitButton.Click += new System.EventHandler(this.SplitButton_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(30, 66);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(77, 12);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "每个文件行：";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(109, 44);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(221, 12);
+            this.label9.TabIndex = 16;
+            this.label9.Text = "目标文件名为“原文件名_split_x.txt”";
+            // 
+            // SplitLineTextBox
+            // 
+            this.SplitLineTextBox.Location = new System.Drawing.Point(109, 63);
+            this.SplitLineTextBox.Name = "SplitLineTextBox";
+            this.SplitLineTextBox.Size = new System.Drawing.Size(110, 21);
+            this.SplitLineTextBox.TabIndex = 17;
+            this.SplitLineTextBox.Text = "100000";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 378);
+            this.ClientSize = new System.Drawing.Size(584, 462);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.ExitAppButton);
             this.Controls.Add(this.label3);
@@ -330,6 +418,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -362,6 +452,14 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox DomainTargetTextBox;
         private System.Windows.Forms.Button SelectMergeSourceFilesButton;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TextBox SplitSourceTextBox;
+        private System.Windows.Forms.Button SplitSourceButton;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button SplitButton;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox SplitLineTextBox;
     }
 }
 

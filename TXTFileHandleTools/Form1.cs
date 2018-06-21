@@ -21,6 +21,8 @@ namespace TXTFileHandleTools
         private string dupTargetFile = "";
         private string domainSourceFile = "";
         private string domainTargetFile = "";
+        private string splitSourceFile = "";
+        private int splitLine = 0;
 
 
         public Form1()
@@ -171,7 +173,6 @@ namespace TXTFileHandleTools
             ofd.Filter = "Text files (*.txt)|*.txt";
             ofd.RestoreDirectory = true;
             ofd.FilterIndex = 1;
-            ofd.Multiselect = true;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 DupSourceFileTextBox.Text = dupSourceFile = ofd.FileName;
@@ -199,7 +200,6 @@ namespace TXTFileHandleTools
             ofd.Filter = "Text files (*.txt)|*.txt";
             ofd.RestoreDirectory = true;
             ofd.FilterIndex = 1;
-            ofd.Multiselect = true;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 DomainSourceTextBox.Text = domainSourceFile = ofd.FileName;
@@ -304,5 +304,87 @@ namespace TXTFileHandleTools
            
         }
 
+        private void SplitSourceButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.InitialDirectory = Application.StartupPath;
+            ofd.Filter = "Text files (*.txt)|*.txt";
+            ofd.RestoreDirectory = true;
+            ofd.FilterIndex = 1;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                SplitSourceTextBox.Text = splitSourceFile = ofd.FileName;
+            }
+        }
+
+        private void SplitButton_Click(object sender, EventArgs e)
+        {
+            SplitSourceTextBox.Enabled = false;
+            SplitSourceButton.Enabled = false;
+            SplitLineTextBox.Enabled = false;
+            SplitButton.Enabled = false;
+            splitLine = Convert.ToInt32(SplitLineTextBox.Text);
+
+            Task.Factory.StartNew(() =>
+            {
+                StreamReader file = new StreamReader(splitSourceFile, Encoding.UTF8);
+
+                string line = string.Empty;
+
+                int currentFileNumber = 0;
+
+                int currentRowCount = 1;
+
+                List<string> outputStrings = new List<string>();
+
+                while ((line = file.ReadLine()) != null)
+                {
+                    outputStrings.Add(line);
+
+                    if (currentRowCount >= splitLine)
+                    {
+
+                        SaveSplitTXT(outputStrings, splitSourceFile, currentFileNumber);
+
+                        currentFileNumber++;
+
+                        currentRowCount = 1;
+
+                        outputStrings.Clear();
+                    }
+                    else
+                    {
+                        currentRowCount++;
+                    }
+                }
+
+                SaveSplitTXT(outputStrings, splitSourceFile, currentFileNumber);
+
+            }).ContinueWith(t =>
+            {
+
+                this.Invoke((MethodInvoker)delegate
+                {
+                    SplitSourceTextBox.Enabled = true;
+                    SplitSourceButton.Enabled = true;
+                    SplitLineTextBox.Enabled = true;
+                    SplitButton.Enabled = true;
+                });
+
+            });
+        }
+
+        private static void SaveSplitTXT(List<string> outputStrings, string sourceFileName, int currentFileNumber)
+        {
+            string targetFile = Path.GetDirectoryName(sourceFileName) + @"\" + Path.GetFileNameWithoutExtension(sourceFileName) +"_split_" + currentFileNumber + ".txt";
+            using (StreamWriter newOutputFile = new StreamWriter(targetFile))
+            {
+                foreach (string newLine in outputStrings)
+                {
+                    newOutputFile.WriteLine(newLine);
+                }
+                newOutputFile.Close();
+            }
+        }
     }
 }
